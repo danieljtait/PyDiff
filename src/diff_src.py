@@ -47,6 +47,11 @@ class ItoDiff:
         dt = (T-t0)/(N-1)
         self.sim(x0,dt,T,t0)
 
+###
+# To do:
+#  - Make example SDEs
+#    - BBridge subclass of SDE with particular sim function 
+
 def a_bb(x,t,par):
     return -x/(1-t)
 
