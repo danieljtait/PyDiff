@@ -17,23 +17,64 @@ class ItoDiff:
     def diff_func(self, x, t):
         return self.diff(x, t, self.par)
 
-    def sim(self, dt, T, t0=0):
+    def sim(self, x0, dt, T, t0=0):
         t = t0
+        rootdt = np.sqrt(dt)
+        tt = [t0]
+        X = [x0]
         while True:
-            tau = min(dt, T-t)
-            print t
+            if dt < T-t:
+                tau = dt
+                rootTau = rootdt
+            else:
+                tau = T-t
+                rootTau = np.sqrt(tau)
+
+            x = X[-1]
+            xnew = x + tau*self.drift_func(x, t) + rootTau*self.diff_func(x,t)*np.random.normal()
+
             if t >= T - 1e-12:
                 break
+            
             else:
+                X.append(xnew)
+                tt.append(t)
                 t += tau
 
-    def sim2(self, T, N, t0=0.):
-        dt = (T-t0)/(N-1)
-        self.sim(dt,T,t0)
+        return np.array(tt), np.array(X)
 
-dX = ItoDiff(None,None,None)
-dX.sim(0.033,1., 0.5)
-print "______________"
-print 
-print "______________"
-dX.sim2(1.,6,0.5)    
+    def sim2(self, x0, T, N, t0=0.):
+        dt = (T-t0)/(N-1)
+        self.sim(x0,dt,T,t0)
+
+def a_bb(x,t,par):
+    return -x/(1-t)
+
+def b_bb(x,t,par):
+    return 1.
+
+def a(x,t,par):
+    return 4*x*(par[0]-x**2)
+
+def b(x,t,par):
+    return par[1]
+
+s = .1
+dX = ItoDiff(a_bb,b_bb,None)
+
+x0 = 0.
+T = 0.99
+
+
+import matplotlib.pyplot as plt
+fig = plt.figure()
+ax = fig.add_subplot(111)
+
+for i in range(10):
+    tt, Xt = dX.sim(x0, 0.02, T=T)
+    tt = np.concatenate((tt,[T]))
+    Xt = np.concatenate((Xt,[0.]))
+    print Xt[0]
+    ax.plot(tt, Xt, 'k-', alpha=0.2)
+
+plt.show()
