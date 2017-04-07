@@ -1,11 +1,10 @@
 # Basic class declaration for a 
 # diffusion object
 #
-
 import numpy as np
 
 
-class ItoDiff:
+class ItoDiffusion:
     def __init__(self, drift, diff, par):
         self.drift = drift
         self.diff = diff
@@ -22,6 +21,7 @@ class ItoDiff:
         rootdt = np.sqrt(dt)
         tt = [t0]
         X = [x0]
+        w = np.random.normal()
         while True:
             if dt < T-t:
                 tau = dt
@@ -38,8 +38,8 @@ class ItoDiff:
             
             else:
                 X.append(xnew)
-                tt.append(t)
                 t += tau
+                tt.append(t)
 
         return np.array(tt), np.array(X)
 
@@ -52,6 +52,7 @@ class ItoDiff:
 #  - Make example SDEs
 #    - BBridge subclass of SDE with particular sim function 
 
+"""
 def a_bb(x,t,par):
     return -x/(1-t)
 
@@ -65,7 +66,7 @@ def b(x,t,par):
     return par[1]
 
 s = .1
-dX = ItoDiff(a_bb,b_bb,None)
+dX = ItoDiffusion(a_bb,b_bb,None)
 
 x0 = 0.
 T = 0.99
@@ -83,3 +84,4 @@ for i in range(10):
     ax.plot(tt, Xt, 'k-', alpha=0.2)
 
 plt.show()
+"""
