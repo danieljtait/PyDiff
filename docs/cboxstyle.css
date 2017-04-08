@@ -1,16 +1,11 @@
 
 div.cbox {
+    float: left;
     width: 600px;
     background: #3f3f3f;
 /*    background: #272822; */
     color: #f8f8f2
 }
-
-div.cbox > p {
-    color: yellow
-}
-
-
 
 pre { line-height: 125%; }
 
