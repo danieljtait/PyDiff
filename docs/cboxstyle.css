@@ -1,0 +1,23 @@
+
+div.cbox {
+    width: 600px;
+    background: #3f3f3f;
+/*    background: #272822; */
+    color: #f8f8f2
+}
+
+div.cbox > p {
+    color: yellow
+}
+
+
+
+pre { line-height: 125%; }
+
+.c { color: red }
+.c1 { color: #5f7f5f }
+.kn { color: #f0dfaf }
+.k { color: #f0dfaf }
+.nn { color: #f8f8f2 } /* Name.Namespace */
+.nf { color: #93e0e3 } /* Name.Function */
+.s2 { color: #dca3a3 }
